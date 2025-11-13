@@ -2,67 +2,114 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Votazione Film per Bambini</title>
+<title>Votazione Film di Natale</title>
 <style>
-    body { font-family: Arial, sans-serif; background-color: #fdf7e3; padding: 20px; }
-    h1 { color: #d8cfc2; }
-    .film-list { margin: 20px 0; }
-    .film-item { margin-bottom: 10px; }
-    button { background-color: #d8cfc2; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-    button:hover { background-color: #cfc4b5; }
-    #results { margin-top: 30px; }
+    body {
+        font-family: 'Comic Sans MS', Arial, sans-serif;
+        background: #fff8f0;
+        padding: 20px;
+        text-align: center;
+    }
+    h1 {
+        color: #d86c6c;
+        margin-bottom: 30px;
+    }
+    .film-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .film-item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fdf2e0;
+        border-radius: 10px;
+        padding: 10px 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: transform 0.1s;
+    }
+    .film-item:hover {
+        transform: scale(1.02);
+        background-color: #fde3c2;
+    }
+    .film-name {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    .vote-bar-container {
+        flex: 1;
+        height: 20px;
+        background-color: #eee;
+        border-radius: 10px;
+        margin-left: 15px;
+        overflow: hidden;
+    }
+    .vote-bar {
+        height: 100%;
+        width: 0%;
+        border-radius: 10px;
+        text-align: right;
+        padding-right: 5px;
+        color: #fff;
+        font-weight: bold;
+        line-height: 20px;
+        transition: width 0.3s;
+    }
 </style>
 </head>
 <body>
 
-<h1>Quale film vogliamo guardare?</h1>
+<h1>🎄 Quale film vogliamo guardare?</h1>
 
-<div class="film-list">
-    <div class="film-item">
-        <button onclick="vote('Il Re Leone')">🦁 Il Re Leone</button>
-    </div>
-    <div class="film-item">
-        <button onclick="vote('Frozen')">❄️ Frozen</button>
-    </div>
-    <div class="film-item">
-        <button onclick="vote('Toy Story')">🤠 Toy Story</button>
-    </div>
-    <div class="film-item">
-        <button onclick="vote('Coco')">🎸 Coco</button>
-    </div>
-</div>
-
-<div id="results">
-    <h2>Risultati:</h2>
-    <ul id="results-list">
-        <li>Il Re Leone: 0 voti</li>
-        <li>Frozen: 0 voti</li>
-        <li>Toy Story: 0 voti</li>
-        <li>Coco: 0 voti</li>
-    </ul>
+<div class="film-list" id="film-list">
+    <!-- Film verranno generati dinamicamente -->
 </div>
 
 <script>
-    // Inizializza voti
-    const votes = {
-        "Il Re Leone": 0,
-        "Frozen": 0,
-        "Toy Story": 0,
-        "Coco": 0
-    };
+const films = [
+    { name: "Polar Express", emoji: "🚂", color: "#d86c6c" },
+    { name: "Frozen: Le avventure di Olaf", emoji: "❄️", color: "#6cc7d8" },
+    { name: "Robin Robin", emoji: "🦉", color: "#d8a16c" },
+    { name: "A Christmas Carol", emoji: "🎩", color: "#6cd86c" },
+    { name: "Grinch", emoji: "🎄", color: "#b86cd8" },
+    { name: "Angela's Christmas 2", emoji: "👧", color: "#d86cd0" },
+    { name: "Mamma ho perso l'aereo", emoji: "🏠", color: "#d8d36c" },
+    { name: "5 Leggende", emoji: "⭐", color: "#6cd8d8" },
+    { name: "Qualcuno salvi il Natale", emoji: "🎅", color: "#d86c6c" }
+];
 
-    function vote(film) {
-        votes[film]++;
-        updateResults();
-    }
+const votes = {};
+films.forEach(f => votes[f.name] = 0);
 
-    function updateResults() {
-        const list = document.getElementById('results-list');
-        list.innerHTML = '';
-        for (const film in votes) {
-            list.innerHTML += `<li>${film}: ${votes[film]} voto${votes[film] !== 1 ? 'i' : ''}</li>`;
-        }
-    }
+const filmListDiv = document.getElementById('film-list');
+
+function renderFilms() {
+    filmListDiv.innerHTML = '';
+    const maxVotes = Math.max(...Object.values(votes), 1); // evita divisione per 0
+    films.forEach(f => {
+        const percent = (votes[f.name]/maxVotes)*100;
+        const filmDiv = document.createElement('div');
+        filmDiv.className = 'film-item';
+        filmDiv.onclick = () => { votes[f.name]++; renderFilms(); };
+
+        filmDiv.innerHTML = `
+            <span class="film-name">${f.emoji} ${f.name}</span>
+            <div class="vote-bar-container">
+                <div class="vote-bar" style="width:${percent}%; background-color:${f.color}">${votes[f.name]}</div>
+            </div>
+        `;
+        filmListDiv.appendChild(filmDiv);
+    });
+}
+
+// Primo render
+renderFilms();
 </script>
 
 </body>
