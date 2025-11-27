@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 CINEMINO CHRISTMAS EDITION! 🎁</title>
+    <style>
+        /* CSS di Base per un Tocco Natalizio */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-image: url('christmas_background.jpg'); 
+            background-size: cover;
+            color: #333;
+        }
+        .header {
+            background-color: #c0392b; /* Rosso Natale Scuro */
+            color: white;
+            padding: 40px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-bottom: 5px solid #27ae60; /* Verde Abete */
+        }
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            text-shadow: 2px 2px #2c3e50;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .content {
+            padding: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        .countdown-title {
+            color: #c0392b;
+            font-size: 2em;
+            margin: 30px 0;
+            border-bottom: 2px dashed #27ae60;
+            padding-bottom: 10px;
+        }
+        
+        /* LAYOUT A GRIGLIA E FLIP CARD */
+        /* Nuovo contenitore per le righe */
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px; /* Spazio tra le righe */
+            perspective: 1000px;
+            padding: 0 10px;
+        }
+
+        /* Contenitore principale della casella (gestisce l'animazione di comparsa) */
+        .film-container {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            
+            width: 150px; 
+            height: 200px; 
+            cursor: pointer;
+            position: relative; 
+        }
+        
+        /* Contenitore interno che gestisce la rotazione */
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 8px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Stato di rotazione al click (aggiunto da JavaScript) */
+        .film-container.is-flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Lati della carta */
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        
+        /* Stile del lato frontale (il numero) */
+        .flip-card-front {
+            background-color: #c0392b; 
+            color: white;
+            font-size: 4em;
+            font-weight: bold;
+            border: 5px solid #27ae60; 
+        }
+        
+        /* Stile del lato posteriore (il film) */
+        .flip-card-back {
+            background-color: #ecf0f1; 
+            color: #333;
+            transform: rotateY(180deg);
+            border: 5px solid #27ae60; 
+        }
+        
+        .flip-card-back h3 {
+            color: #c0392b;
+            font-size: 1.2em;
+            margin: 5px 0 10px 0;
+        }
+
+        .flip-card-back img {
+            max-width: 90%;
+            max-height: 100px;
+            border-radius: 4px;
+            object-fit: contain;
+        }
+        
+        /* MEDIA QUERY per schermi molto stretti, per evitare il sormonto */
+        @media (max-width: 550px) {
+            .row {
+                /* Permette alle card di andare a capo anche all'interno delle righe se lo schermo è minuscolo */
+                flex-wrap: wrap; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🌟 CINEMINO CHRISTMAS EDITION! 🌟</h1>
+        <h2>Le serate più magiche ti aspettano!</h2>
+    </div>
+
+    <div class="content">
+        <h3 class="countdown-title">🎁 COUNTDOWN 🎁 <br> 🎁 NATALIZIO! 🎁</h3>
+
+
+        <p>Siete prontə a tuffarvi in un mondo di avventure, risate e tanta magia natalizia?</p>
+
+        <p style="font-size: 1.2em; font-weight: bold; color: #c0392b; margin-top: 40px;">L'appuntamento è sempre alle 18:30 presso la saletta giovani di Ischia.</p>
+
+        <p>Cliccate sulle porticine per scoprire quali film vi aspettano!</p>
+
+        
+        <div class="card-wrapper">
+            
+            <div class="row">
+                <div id="film5" class="film-container">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">5</div>
+                        <div class="flip-card-back">
+                            <h3>A Christmas Carol</h3>
+                            <p>VENERDÌ 28 novembre 2025</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="film4" class="film-container">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">4</div>
+                        <div class="flip-card-back">
+                            <h3>Qualcuno salvi il Natale</h3>
+                            <p>VENERDÌ 5 dicembre 2025</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="film3" class="film-container">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">3</div>
+                        <div class="flip-card-back">
+                            <h3>Polar Express</h3>
+                            <p>SABATO 13 dicembre 2025</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div id="film2" class="film-container">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">2</div>
+                        <div class="flip-card-back">
+                            <h3>Mamma Ho Perso l'Aereo</h3>
+                            <p>VENERDÌ 19 dicembre 2025</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="film1" class="film-container">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">1</div>
+                        <div class="flip-card-back">
+                            <h3>Il Grinch</h3>
+                            <p>MARTEDÌ 23 dicembre 2025</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 1.2em; font-weight: bold; color: #c0392b; margin-top: 40px;">Non vediamo l'ora di condividere queste magiche serate con voi!</p>
+        <p style="font-size: 1.2em; font-weight: bold; color: #c0392b; margin-top: 40px;">Ci vediamo al CINEMINO CHRISTMAS EDITION!</p>
+        
+        <p>Ricorda di portare qualcosa da condividere e mangiare!</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const filmContainers = document.querySelectorAll('.film-container');
+            // L'ordine è ancora dal 5 al 1, ma lo script prende tutti gli elementi con la classe .film-container
+            const filmsOrder = ['film5', 'film4', 'film3', 'film2', 'film1'];
+            const comparsaDelay = 500; 
+
+            // 1. ANIMAZIONE DI COMPARSA IN SEQUENZA
+            filmsOrder.forEach((id, index) => {
+                const filmElement = document.getElementById(id);
+                if (filmElement) {
+                    setTimeout(() => {
+                        filmElement.style.opacity = '1';
+                        filmElement.style.transform = 'translateY(0)';
+                    }, index * comparsaDelay);
+                }
+            });
+
+            // 2. FUNZIONALITÀ DI ROTAZIONE AL CLICK
+            filmContainers.forEach(container => {
+                container.addEventListener('click', () => {
+                    // Aggiunge/rimuove la classe 'is-flipped' per attivare la rotazione CSS
+                    container.classList.toggle('is-flipped');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
